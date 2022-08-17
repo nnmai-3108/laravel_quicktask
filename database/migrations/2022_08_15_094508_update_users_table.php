@@ -17,8 +17,8 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('first_name');
             $table->string('last_name');
-            $table->boolen('is_admin');
-            $table->boolen('is_active');
+            $table->boolean('is_admin');
+            $table->boolean('is_active');
             $table->string('username');
         });
     }
