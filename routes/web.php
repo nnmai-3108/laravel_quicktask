@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+//Cách 1: Dùng route resourse cho UserController
+Route::resource('users',UserController::class);
+
+//Cách 2: Viết rõ các route tương ứng với các func trong controller còn lại
+Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {
+    Route::get('', 'index')->name('index');
+    Route::get('create', 'create')->name('create');
+    Route::get('{task}', 'show')->name('show');
+    Route::get('{task}/edit', 'edit')->name('edit');
+    Route::post('', 'store')->name('store');
+    Route::put('{task}', 'update')->name('update');
+    Route::delete('{task}', 'destroy')->name('destroy');
 });
