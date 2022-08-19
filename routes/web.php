@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 //Cách 1: Dùng route resourse cho UserController
-Route::resource('users',UserController::class);
+Route::resource('users',UserController::class)->middleware('admin');;
 
 //Cách 2: Viết rõ các route tương ứng với các func trong controller còn lại
 Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {
