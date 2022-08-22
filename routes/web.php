@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 //Cách 1: Dùng route resourse cho UserController
-Route::resource('users',UserController::class)->middleware('admin');;
+Route::resource('users', UserController::class)->middleware('admin');
 
 //Cách 2: Viết rõ các route tương ứng với các func trong controller còn lại
 Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {
@@ -32,3 +32,7 @@ Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group
     Route::put('{task}', 'update')->name('update');
     Route::delete('{task}', 'destroy')->name('destroy');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
