@@ -7,11 +7,6 @@
             <div class="card">
                 <div class="card-header">{{ trans('messages.login.login') }}</div>
 
-                <div class="lang">
-                    <button><a href="{{ route('lang',['lang' => 'vi']) }}">Tiếng Việt</a></button>
-                        <button><a href="{{ route('lang',['lang' => 'en' ]) }}">English</a></button>
-                </div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

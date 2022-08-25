@@ -22,7 +22,17 @@ Route::get('/', function () {
 });
 
 //Cách 1: Dùng route resourse cho UserController
-Route::resource('users', UserController::class)->middleware('admin');
+//Route::resource('users', UserController::class)->middleware('admin');
+
+Route::prefix('users')->name('users.')->controller(UserController::class)->group(function () {
+    Route::get('', 'index')->name('index');
+    Route::get('create', 'create')->name('create');
+    Route::get('{id}', 'show')->name('show');
+    Route::get('{id}/edit', 'edit')->name('edit');
+    Route::post('', 'store')->name('store');
+    Route::put('{id}', 'update')->name('update');
+    Route::delete('{id}', 'destroy')->name('destroy');
+});
 
 //Cách 2: Viết rõ các route tương ứng với các func trong controller còn lại
 Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {

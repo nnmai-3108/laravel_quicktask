@@ -16,4 +16,20 @@ return [
         'password' => 'Mật khẩu',
         'confirm' => 'Nhập lại mật khẩu',
     ],
+    'user' => [
+        'Table' => 'Bảng người dùng',
+        'create' => 'Thêm người mới',
+        'No' => 'STT',
+        'Username' => 'Tên đăng nhập',
+        'Email' => 'Địa chỉ email',
+        'Action' => 'Hành động',
+        'Show' => 'Xem',
+        'Edit' => 'Sửa',
+        'Delete' => 'Xóa',
+    ],
+    'task' => [
+        'Table' => 'Tạo task mới',
+        'Title' => 'Tiêu đề',
+        'Content' => 'Nội dung',
+    ]
 ];
