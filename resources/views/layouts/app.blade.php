@@ -37,15 +37,23 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
+
+                            @if (Route::has('lang'))
+                            <div class="lang">
+                                <button><a href="{{ route('lang',['lang' => 'vi']) }}">Tiếng Việt</a></button>
+                                <button><a href="{{ route('lang',['lang' => 'en' ]) }}">English</a></button>
+                            </div>
+                            @endif
+
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ trans('messages.login.login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ trans('messages.register.register') }}</a>
                                 </li>
                             @endif
                         @else

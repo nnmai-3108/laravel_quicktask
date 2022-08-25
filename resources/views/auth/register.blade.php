@@ -11,11 +11,6 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="lang">
-                            <button><a href="{{ route('lang',['lang' => 'vi']) }}">Tiếng Việt</a></button>
-                                <button><a href="{{ route('lang',['lang' => 'en' ]) }}">English</a></button>
-                        </div>
-
                         <div class="row mb-3">
                             <label for="username" class="col-md-4 col-form-label text-md-end">{{ trans('messages.register.username') }}</label>
 
