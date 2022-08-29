@@ -2,46 +2,57 @@
 
 @section('content')
 
-<div class="page-header"><h4>Quản lý User</h4></div>
+<!DOCTYPE html>
 
-<?php //Hiển thị thông báo thành công?>
-@if ( Session::has('success') )
-	<div class="alert alert-success alert-dismissible" role="alert">
-		<strong>{{ Session::get('success') }}</strong>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-	</div>
-@endif
+<head>
+    <meta charset="UTF-8">
+    <title>{{ trans('messages.user.add') }}r</title>
+</head>
 
-<?php //Hiển thị thông báo lỗi?>
-@if ( Session::has('error') )
-	<div class="alert alert-danger alert-dismissible" role="alert">
-		<strong>{{ Session::get('error') }}</strong>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-	</div>
-@endif
+<body>
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-lg-12 margin-tb">
+                <div class="pull-left mb-2">
+                    <h2>{{ trans('messages.user.add') }}</h2>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="{{ route('users.index') }}">{{ trans('messages.user.Back') }}</a>
+                </div>
+            </div>
+        </div>
+        @if (session('status'))
+        <div class="alert alert-success mb-1 mt-1">
+            {{ session('status') }}
+        </div>
+        @endif
+        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>{{ trans('messages.user.Username') }}:</strong>
+                        <input type="text" name="username" class="form-control" placeholder="Username">
+                        @error('username')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>{{ trans('messages.user.Email') }}:</strong>
+                        <input type="email" name="email" class="form-control" placeholder="Email Address">
+                        @error('email')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary ml-3">{{ trans('messages.task.Submit') }}</button>
+            </div>
+        </form>
+    </div>
+</body>
 
-<?php //Form thêm mới user?>
-<p><a class="btn btn-primary" href="{{ url('/users') }}">Về danh sách</a></p>
-<div class="col-xs-4 col-xs-offset-4">
-	<center><h4>Add user</h4></center>
-	<form action="{{ url('/users/create') }}" method="post">
-		<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}"/>
-		<div class="form-group">
-			<label for="username">username</label>
-			<input type="text" class="form-control" id="username" name="username" placeholder="username" maxlength="255" required />
-		</div>
-		<div class="form-group">
-			<label for="email">email</label>
-			<input type="text" class="form-control" id="email"  name="email" placeholder="email" maxlength="15" required />
-		</div>		
-		<center><button type="submit" class="btn btn-primary">Thêm</button></center>
-	</form>
-</div>
+</html>
 
 @endsection
