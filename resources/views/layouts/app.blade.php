@@ -36,14 +36,14 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        @if (Route::has('lang'))
+                        <div class="lang">
+                            <button><a href="{{ route('lang',['lang' => 'vi']) }}">Tiếng Việt</a></button>
+                            <button><a href="{{ route('lang',['lang' => 'en' ]) }}">English</a></button>
+                        </div>
+                        @endif
                         @guest
 
-                            @if (Route::has('lang'))
-                            <div class="lang">
-                                <button><a href="{{ route('lang',['lang' => 'vi']) }}">Tiếng Việt</a></button>
-                                <button><a href="{{ route('lang',['lang' => 'en' ]) }}">English</a></button>
-                            </div>
-                            @endif
 
                             @if (Route::has('login'))
                                 <li class="nav-item">

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Laravel Tasks</h2>
+                <h2>Hi {{ $user->first_name }}!</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('tasks.create') }}">{{ trans('messages.task.Table') }}</a>
@@ -20,22 +20,22 @@
    
     <table class="table table-bordered">
         <tr>
-            <th>{{ trans('messages.user.No') }}</th>
             <th>{{ trans('messages.task.Title') }}</th>
             <th>{{ trans('messages.task.Content') }}</th>
+            <th>{{ trans('messages.task.created') }}</th>
             <th width="280px">{{ trans('messages.user.Action') }}</th>
         </tr>
-        
+        @foreach($user->tasks as $task)
         <tr>
-            <td>A</td>
-            <td>B</td>
-            <td>C</td>
+            <td>{{ $task->task_title }}</td>
+            <td>{{ $task->task_content }}</td>
+            <td>{{ $task->created_at }}</td>
             <td>
-                <form action="{{ route('tasks.destroy',1) }}" method="POST">
+                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('tasks.show', 1) }}">{{ trans('messages.user.Show') }}</a>
+                    <a class="btn btn-info" href="{{ route('tasks.show', $task->id) }}">{{ trans('messages.user.Show') }}</a>
     
-                    <a class="btn btn-primary" href="{{ route('tasks.edit', 1) }}">{{ trans('messages.user.Edit') }}</a>
+                    <a class="btn btn-primary" href="{{ route('tasks.edit', $task->id) }}">{{ trans('messages.user.Edit') }}</a>
    
                     @csrf
                     @method('DELETE')
@@ -44,6 +44,7 @@
                 </form>
             </td>
         </tr>
+        @endforeach
     </table>
   
       

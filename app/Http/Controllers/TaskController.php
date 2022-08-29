@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
@@ -26,7 +31,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -35,9 +40,11 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
-        //
+        Task::create($request->only('task_title', 'task_content'));
+   
+        return redirect()->route('users.show', $task->user_id)->with('success', trans('messages.task.success_create'));
     }
 
     /**
@@ -57,9 +64,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id)
     {
-        //
+        $task = Task::find($user_id);
+
+        if (!$task) return Redirect::back();
+
+        return view('tasks.edit', ['task' => $task]);
     }
 
     /**
@@ -71,7 +82,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->update(
+            [
+                'task_title' => $request->title,
+                'task_content' => $request->content,
+            ]
+        );
+
+        return redirect()->route('users.show', $task->user_id)->with('success', trans('messages.task.success_update'));
     }
 
     /**
@@ -80,8 +99,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        $task->delete();
+  
+        return redirect()->route('users.show', $task->user_id)->with('success', trans('messages.task.success_delete'));
     }
 }

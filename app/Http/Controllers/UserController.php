@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Authenticate;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,9 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $id = Auth::id();
 
-        return view('users.index', ['users' => $users]);
+	    $users = DB::table('users')->select('id', 'username', 'email')->paginate(config('app.pagination.user'));
+	
+	    return view('users.index', compact('users'));
     }
 
     /**
@@ -38,7 +47,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->only('username', 'email'));
+
+        return redirect()->route('users.index')->with('success', trans('messages.user.success_create'));
     }
 
     /**
@@ -76,9 +87,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update(
+            [
+                'username' => $request->username,
+                'email' => $request->email,
+            ]
+        );
+
+        return redirect()->route('users.index')->with('success', trans('messages.user.success_update'));
     }
 
     /**
@@ -87,8 +106,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+  
+        return redirect()->route('users.show', $user->id)->with('success', trans('messages.user.success_delete'));
     }
 }

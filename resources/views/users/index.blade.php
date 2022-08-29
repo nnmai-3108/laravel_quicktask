@@ -25,26 +25,23 @@
             <th>{{ trans('messages.user.Email') }}</th>
             <th width="280px">{{ trans('messages.user.Action') }}</th>
         </tr>
-        
+        @foreach ($users as $key => $user)
         <tr>
-            <td>1</td>
-            <td>nnmeii</td>
-            <td>harumiaki3108@gmail.com</td>
+            <td>{{ ($users->currentpage() - 1) * $users->perpage() + $key + 1 }}</td>
+            <td>{{ $user->username }}</td>
+            <td>{{ $user->email }}</td>
             <td>
-                <form action="{{ route('users.destroy',1) }}" method="POST">
-   
-                    <a class="btn btn-info" href="{{ route('tasks.index') }}">{{ trans('messages.user.Show') }}</a>
-    
-                    <a class="btn btn-primary" href="{{ route('users.edit', 1) }}">{{ trans('messages.user.Edit') }}</a>
-   
+                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                    <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">{{ trans('messages.user.Show') }}</a>
+                    <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">{{ trans('messages.user.Edit') }}</a>
                     @csrf
                     @method('DELETE')
-      
                     <button type="submit" class="btn btn-danger">{{ trans('messages.user.Delete') }}</button>
                 </form>
             </td>
         </tr>
+        @endforeach
     </table>
-  
-      
+    {{ $users->links('pagination::bootstrap-4') }}
+
 @endsection
