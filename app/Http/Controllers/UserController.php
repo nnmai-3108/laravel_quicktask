@@ -106,10 +106,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
-  
-        return redirect()->route('users.show', $user->id)->with('success', trans('messages.user.success_delete'));
+        DB::beginTransaction();
+        try {
+            $user = User::findOrFail($id);
+            $user->tasks()->delete();
+            $user->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+
+        return redirect()->route('users.index')->with('success', trans('messages.user.success_delete'));
     }
 }
