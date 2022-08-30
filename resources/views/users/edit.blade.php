@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>{{ trans('messages.task.Edit_user') }}</h2>
+                    <h2>{{ trans('messages.user.Edit_user') }}</h2>
                 </div>
                 <div class="pull-right">
                     <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}" enctype="multipart/form-data">
