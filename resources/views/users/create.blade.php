@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ trans('messages.user.add') }}r</title>
+    <title>{{ trans('messages.user.add') }}</title>
 </head>
 
 <body>

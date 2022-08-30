@@ -37,10 +37,10 @@ Route::prefix('users')->name('users.')->controller(UserController::class)->group
 //Cách 2: Viết rõ các route tương ứng với các func trong controller còn lại
 Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {
     Route::get('', 'index')->name('index');
-    Route::get('create', 'create')->name('create');
+    Route::get('create/{user}', 'create')->name('create');
     Route::get('{task}', 'show')->name('show');
     Route::get('{task}/edit', 'edit')->name('edit');
-    Route::post('', 'store')->name('store');
+    Route::post('{id}', 'store')->name('store');
     Route::put('{task}', 'update')->name('update');
     Route::delete('{task}', 'destroy')->name('destroy');
 });

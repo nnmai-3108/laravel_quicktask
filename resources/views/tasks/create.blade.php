@@ -23,20 +23,20 @@
     </div>
 @endif
    
-<form action="{{ route('tasks.store') }}" method="POST">
+<form action="{{ route('tasks.store', $user->id) }}" method="POST">
     @csrf
   
      <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>{{ trans('messages.task.Title') }}:</strong>
-                <input type="text" name="title" class="form-control" placeholder="Title">
+                <input type="text" name="task_title" class="form-control" placeholder="Title">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>{{ trans('messages.task.Content') }}:</strong>
-                <textarea class="form-control" style="height:150px" name="content" placeholder="Content"></textarea>
+                <textarea class="form-control" name="task_content" placeholder="Content"></textarea>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
