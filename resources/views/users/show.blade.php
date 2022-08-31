@@ -7,7 +7,7 @@
                 <h2>Hi {{ $user->first_name }}!</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('tasks.create') }}">{{ trans('messages.task.Table') }}</a>
+                <a class="btn btn-success" href="{{ route('tasks.create', $user->id) }}">{{ trans('messages.task.Table') }}</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <tr>
             <td>{{ $task->task_title }}</td>
             <td>{{ $task->task_content }}</td>
-            <td>{{ $task->created_at }}</td>
+            <td>{{ dateToDMY($task->created_at) }}</td>
             <td>
                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
    

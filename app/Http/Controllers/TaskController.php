@@ -29,9 +29,11 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('tasks.create');
+        $user = User::findOrFail($id);
+
+        return view('tasks.create', compact('user'));
     }
 
     /**
@@ -40,11 +42,13 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Task $task)
-    {
-        Task::create($request->only('task_title', 'task_content'));
+    public function store(Request $request, $id)
+    {   
+        $task = new Task($request->all());
+        $task->user_id = $id;
+        $task->save();
    
-        return redirect()->route('users.show', $task->user_id)->with('success', trans('messages.task.success_create'));
+        return redirect()->route('users.show', $id)->with('success', trans('messages.task.success_create'));
     }
 
     /**
