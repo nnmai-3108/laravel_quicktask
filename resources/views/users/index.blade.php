@@ -6,9 +6,6 @@
             <div class="pull-left">
                 <h2>{{ trans('messages.user.Table') }}</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('users.create') }}">{{ trans('messages.user.create') }}</a>
-            </div>
         </div>
     </div>
    
